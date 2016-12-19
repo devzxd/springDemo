@@ -1,5 +1,8 @@
 package com.demo.controller;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,11 +16,16 @@ import org.springframework.web.servlet.ModelAndView;
  **/
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController{
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @RequestMapping("/hello")
     public String test(){
-        System.out.println("===hi");
+        logger.info("info============{}","test");
+        logger.error("error============={}","hiehie");
+        logger.debug("debug==========={}","hhahhahah");
+        //        System.out.println("===hi");
         return "hello";
     }
 
