@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd                     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+    <!-- 加载属性配置文件 -->
+    <context:property-placeholder location="classpath*:properties/mysql.properties" ignore-unresolvable="true" />
+    <!--数据源配置-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="${mysql.url}" />
+        <property name="username" value="${mysql.userName}" />
+        <property name="password" value="${mysql.password}" />
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="1" />
+        <property name="minIdle" value="1" />
+        <property name="maxActive" value="20" />
+
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+
+        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <!--如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。分库分表较多的数据库，建议配置为false。-->
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+
+        <!-- 配置监控统计拦截的filters -->
+        <!--<property name="filters" value="stat" />-->
+    </bean>
+
+    <!-- 配置SessionFactory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.demo.bean" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <!-- Fetch Size 是设定JDBC的Statement读取数据的时候每次从数据库中取出的记录条数。 -->
+                <prop key="hibernate.jdbc.fetch_size">50</prop>
+                <!-- Batch Size是设定对数据库进行批量删除，批量更新和批量插入的时候的批次大小 -->
+                <prop key="hibernate.jdbc.batch_size">25</prop>
+                <!-- 允许使用外连接抓取.取值. true | false -->
+                <prop key="hibernate.use_outer_join">true</prop>
+                <!-- 外连接抓取树的最大深度,建议在0到3之间 -->
+                <prop key="hibernate.max_fetch_depth">1</prop>
+                <!-- 强制Hibernate按照被更新数据的主键，为SQL更新排序。这么做将减少在高并发系统中事务的死锁。 取值 true | false  -->
+                <prop key="hibernate.order_updates">true</prop>
+                <!-- 如果开启, Hibernate将收集有助于性能调节的统计数据.取值true|false -->
+                <prop key="hibernate.generate_statistics">true</prop>
+                <!-- create update delete create-drop -->
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="javax.persistence.validation.mode">none</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 配置一个事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+            <tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+            <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+</beans>

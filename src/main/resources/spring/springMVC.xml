@@ -9,7 +9,7 @@
                     http://www.springframework.org/schema/mvc
                     http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
 
-    <!-- 注解扫描包 -->
+
     <!-- ResponseBody 中文乱码 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
@@ -24,6 +24,9 @@
             </list>
         </property>
     </bean>
+
+    <!-- 统一异常处理 -->
+    <bean class="com.demo.core.exception.MyExceptionHandler"></bean>
 
     <!--开启注解-->
     <mvc:annotation-driven>
@@ -58,5 +61,7 @@
         <property name="order" value="0"></property>
         <property name="contentType" value="text/html;charset=UTF-8"></property>
     </bean>
+
+
 
 </beans>

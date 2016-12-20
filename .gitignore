@@ -17,7 +17,7 @@ target
 .classpath
 .project
 
-/src/main/webapp/.idea
+
 .idea
 *.iml
 *.eml
