@@ -16,7 +16,7 @@ import java.util.Map;
  * @create 2016-12-20 14:34
  **/
 @Service
-public class UserServiceImpl implements IUserService{
+public class UserServiceImpl implements IUserService {
 
     private final IHibernateDao<User> dao;
 
@@ -34,14 +34,14 @@ public class UserServiceImpl implements IUserService{
     public Integer update(Map<String, Object> map) {
         String hql = "update User set ";
         //前台传什么字段就更新什么字段
-        for(Map.Entry entry:map.entrySet()){
-            if(!entry.getKey().equals("id")){
-                hql += entry.getKey() + "= :"+entry.getKey()+",";
+        for (Map.Entry entry : map.entrySet()) {
+            if (!entry.getKey().equals("id")) {
+                hql += entry.getKey() + "= :" + entry.getKey() + ",";
             }
         }
         hql = hql.substring(0, hql.length() - 1) + " where id = :id";
 
-        return dao.executeHql(hql,map);
+        return dao.executeHql(hql, map);
     }
 
 }

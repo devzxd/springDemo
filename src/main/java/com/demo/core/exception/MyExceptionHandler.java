@@ -17,7 +17,7 @@ import java.io.StringWriter;
  * @create 2016-12-20 14:07
  **/
 
-public class MyExceptionHandler implements HandlerExceptionResolver{
+public class MyExceptionHandler implements HandlerExceptionResolver {
 
     Logger logger = LoggerFactory.getLogger(MyExceptionHandler.class);
 

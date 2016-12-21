@@ -13,6 +13,7 @@ import java.util.Map;
 public interface IUserService {
     /**
      * 保存
+     *
      * @param user
      */
     void save(User user);
@@ -20,6 +21,7 @@ public interface IUserService {
 
     /**
      * 修改
+     *
      * @param map
      * @return
      */

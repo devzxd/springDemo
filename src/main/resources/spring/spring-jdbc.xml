@@ -7,37 +7,37 @@
           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
     <!-- 加载属性配置文件 -->
-    <context:property-placeholder location="classpath*:properties/mysql.properties" ignore-unresolvable="true" />
+    <context:property-placeholder location="classpath*:properties/mysql.properties" ignore-unresolvable="true"/>
     <!--数据源配置-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->
-        <property name="url" value="${mysql.url}" />
-        <property name="username" value="${mysql.userName}" />
-        <property name="password" value="${mysql.password}" />
+        <property name="url" value="${mysql.url}"/>
+        <property name="username" value="${mysql.userName}"/>
+        <property name="password" value="${mysql.password}"/>
 
         <!-- 配置初始化大小、最小、最大 -->
-        <property name="initialSize" value="1" />
-        <property name="minIdle" value="1" />
-        <property name="maxActive" value="20" />
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="maxActive" value="20"/>
 
         <!-- 配置获取连接等待超时的时间 -->
-        <property name="maxWait" value="60000" />
+        <property name="maxWait" value="60000"/>
 
         <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
 
         <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
 
-        <property name="validationQuery" value="SELECT 'x'" />
-        <property name="testWhileIdle" value="true" />
-        <property name="testOnBorrow" value="false" />
-        <property name="testOnReturn" value="false" />
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
 
         <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
         <!--如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。分库分表较多的数据库，建议配置为false。-->
-        <property name="poolPreparedStatements" value="true" />
-        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
 
         <!-- 配置监控统计拦截的filters -->
         <!--<property name="filters" value="stat" />-->
@@ -45,8 +45,8 @@
 
     <!-- 配置SessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="com.demo.bean" />
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.demo.bean"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.show_sql">true</prop>
@@ -71,16 +71,16 @@
 
     <!-- 配置一个事务管理器 -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
-            <tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
-            <tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
-            <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
-            <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="*" propagation="SUPPORTS" read-only="true"/>
         </tx:attributes>
     </tx:advice>
 </beans>

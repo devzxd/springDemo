@@ -9,61 +9,59 @@ import java.util.Map;
 
 public interface IHibernateDao<T> {
 
-	T get(Class<T> c, String id) throws HibernateException;
+    T get(Class<T> c, String id) throws HibernateException;
 
-	T getHql(String hql, Map<String, Object> params) throws HibernateException;
-	
-	T getSql(String sql, Map<String, Object> params, Class<T> clazz) throws HibernateException;
+    T getHql(String hql, Map<String, Object> params) throws HibernateException;
 
-	List<T> find(String hql) throws HibernateException;
+    T getSql(String sql, Map<String, Object> params, Class<T> clazz) throws HibernateException;
 
-	List<T> find(String hql, Map<String, Object> params) throws HibernateException;
+    List<T> find(String hql) throws HibernateException;
 
-	List<T> find(String hql, Map<String, Object> params, Integer pageIndex, Integer pageSize) throws HibernateException;
+    List<T> find(String hql, Map<String, Object> params) throws HibernateException;
 
-	List<T> findBySQL(Class<T> clazz, String sql) throws HibernateException;
+    List<T> find(String hql, Map<String, Object> params, Integer pageIndex, Integer pageSize) throws HibernateException;
 
-	List<Map<String, Object>> findBySQL(String sql);
+    List<T> findBySQL(Class<T> clazz, String sql) throws HibernateException;
 
-	List<Map<String, Object>> findBySQL(String sql, Map<String, Object> params);
+    List<Map<String, Object>> findBySQL(String sql);
 
-	List<Map<String, Object>> findBySQL(String sql, Map<String, Object> params, Integer pageIndex, Integer pageSize);
+    List<Map<String, Object>> findBySQL(String sql, Map<String, Object> params);
 
-	void saveOrUpdate(T o);
-	
-	void saveOrUpdate(List<T> o);
+    List<Map<String, Object>> findBySQL(String sql, Map<String, Object> params, Integer pageIndex, Integer pageSize);
 
-	Serializable save(T o);
-	
-	List<Serializable> save(List<T> o);
+    void saveOrUpdate(T o);
 
-	void delete(T o) throws HibernateException;
-	
-	void delete(List<T> o) throws HibernateException;
+    void saveOrUpdate(List<T> o);
 
-	void update(T o) throws HibernateException;
+    Serializable save(T o);
 
-	Integer executeHql(String hql, Map<String, Object> params) throws HibernateException;
+    List<Serializable> save(List<T> o);
 
-	Integer executeHql(String hql) throws HibernateException;
+    void delete(T o) throws HibernateException;
 
-	Integer executeSql(String sql) throws HibernateException;
+    void delete(List<T> o) throws HibernateException;
 
-	Integer executeSql(String sql, Map<String, Object> params) throws HibernateException;
+    void update(T o) throws HibernateException;
 
-	Session getCurrentSession() throws HibernateException;
+    Integer executeHql(String hql, Map<String, Object> params) throws HibernateException;
 
-	Integer findBySQLCount(Map<String, Object> params, String sql);
+    Integer executeHql(String hql) throws HibernateException;
 
-	Integer findByHQLCount(Map<String, Object> params, String hql);
+    Integer executeSql(String sql) throws HibernateException;
 
-	List<T> findBySQL(String sql, Map<String, Object> params, Class<T> clazz);
+    Integer executeSql(String sql, Map<String, Object> params) throws HibernateException;
 
-	List<T> findBySQLSomeFields(String sql, Map<String, Object> params, Class<T> clazz);
+    Session getCurrentSession() throws HibernateException;
 
-	Object findBySQLOne(String sql, Map<String, Object> params);
-	
-	
+    Integer findBySQLCount(Map<String, Object> params, String sql);
+
+    Integer findByHQLCount(Map<String, Object> params, String hql);
+
+    List<T> findBySQL(String sql, Map<String, Object> params, Class<T> clazz);
+
+    List<T> findBySQLSomeFields(String sql, Map<String, Object> params, Class<T> clazz);
+
+    Object findBySQLOne(String sql, Map<String, Object> params);
 
 
 }

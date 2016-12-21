@@ -4,6 +4,6 @@
     <title>hello world</title>
 </head>
 <body>
- hell idea~!
+hell idea~!
 </body>
 </html>

@@ -24,7 +24,7 @@ import java.util.Map;
  **/
 @Controller
 @RequestMapping("/user")
-public class UserController{
+public class UserController {
 
     @Autowired
     private IUserService userService;
@@ -33,8 +33,8 @@ public class UserController{
 
     @RequestMapping(value = "/save")
     @ResponseBody
-    public String saveUser(String info){
-        User user = JSON.parseObject(info,User.class);
+    public String saveUser(String info) {
+        User user = JSON.parseObject(info, User.class);
         userService.save(user);
         String id = user.getId();
         return id;
@@ -42,51 +42,50 @@ public class UserController{
 
     @RequestMapping("/update")
     @ResponseBody
-    public String updateUser(String info){
+    public String updateUser(String info) {
         JSONObject jsonObject = JSON.parseObject(info);
-        if(!jsonObject.containsKey("id")){
+        if (!jsonObject.containsKey("id")) {
             return "id不能为空";
         }
-        Map<String,Object> map =  new HashMap<>();
-        for(Map.Entry ignored :jsonObject.entrySet()){
-            map.put(ignored.getKey().toString(),ignored.getValue());
+        Map<String, Object> map = new HashMap<>();
+        for (Map.Entry ignored : jsonObject.entrySet()) {
+            map.put(ignored.getKey().toString(), ignored.getValue());
         }
         Integer count = userService.update(map);
         return count.toString();
     }
 
     @RequestMapping("/hello")
-    public String test(){
-        logger.info("info============{}","test");
-        logger.error("error============={}","hiehie");
-        logger.debug("debug==========={}","hhahhahah");
+    public String test() {
+        logger.info("info============{}", "test");
+        logger.error("error============={}", "hiehie");
+        logger.debug("debug==========={}", "hhahhahah");
         //        System.out.println("===hi");
         return "hello";
     }
 
     @RequestMapping("/html")
-    public String html(){
+    public String html() {
         return "html";
     }
 
     @RequestMapping("/sayHello")
     @ResponseBody
-    public String sayHello(){
+    public String sayHello() {
         return "hahhahahahh";
     }
 
     @RequestMapping("/view")
-    public ModelAndView view(){
+    public ModelAndView view() {
         ModelAndView modelAndView = new ModelAndView("html");
-        return  modelAndView;
-    }
-
-    @RequestMapping("/jspView")
-    public ModelAndView jspView(){
-        ModelAndView modelAndView = new ModelAndView("hello");
         return modelAndView;
     }
 
+    @RequestMapping("/jspView")
+    public ModelAndView jspView() {
+        ModelAndView modelAndView = new ModelAndView("hello");
+        return modelAndView;
+    }
 
 
 }
